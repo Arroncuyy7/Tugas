@@ -3,26 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Tugas Sekolah</title>
+    <title>Tugas App</title>
     <link rel="stylesheet" href="Perbagus.css">
 </head>
 <body>
     <div class="container">
-        <h1>Daftar Tugas Sekolah</h1>
-        
-        <!-- Tombol untuk menambahkan tugas -->
-        <button id="addTaskBtn">+</button>
-        
-        <!-- Form untuk menambah tugas -->
+        <h1>Daftar Tugas</h1>
+        <button id="addTaskBtn">Tambah Tugas</button>
         <div id="taskForm" class="hidden">
             <input type="text" id="taskInput" placeholder="Masukkan tugas" required>
             <input type="date" id="deadlineInput" required>
             <button id="saveTaskBtn">Simpan Tugas</button>
         </div>
-
         <ul id="taskList"></ul>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+    <script>
+        // Firebase configuration (dari langkah sebelumnya)
+        var firebaseConfig = {
+            apiKey: "AIzaSyBOIx7Q50yEQNnPmdN7OlzzGRaT30k2i1I",
+                authDomain: "backup-80243.firebaseapp.com",
+                 projectId: "backup-80243",
+               storageBucket: "backup-80243.appspot.com",
+              messagingSenderId: "676376137159",
+             appId: "1:676376137159:web:c717cb5f14ec5647b1dde2",
+             measurementId: "G-WGCLG19BN5"
+        };
+        // Inisialisasi Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        const database = firebase.database();
+
+        // Implementasi simpan dan ambil data dari Firebase di sini...
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
