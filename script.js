@@ -113,6 +113,26 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTasksFromLocalStorage();
 });
 
+// Ambil data tugas dari Firebase dan tampilkan
+database.ref('tasks/').on('value', (snapshot) => {
+    taskList.innerHTML = ''; // Kosongkan daftar tugas sebelum menambah tugas baru
+    snapshot.forEach((childSnapshot) => {
+        const taskData = childSnapshot.val();
+        const taskItem = document.createElement('li');
+        taskItem.classList.add('task-item');
+        taskItem.innerHTML = `
+            <span>${taskData.task}</span>
+            <span class="deadline">Deadline: ${taskData.deadline}</span>
+            <button class="remove-btn">*</button>
+        `;
+        taskItem.querySelector('.remove-btn').addEventListener('click', () => {
+            childSnapshot.ref.remove(); // Hapus tugas dari Firebase
+        });
+        taskList.appendChild(taskItem);
+    });
+});
+
+
 // Firebase configuration
 var firebaseConfig = {
 apiKey: "AIzaSyBOIx7Q50yEQNnPmdN7OlzzGRaT30k2i1I",
