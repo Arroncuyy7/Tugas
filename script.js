@@ -1,4 +1,4 @@
-// Firebase configuration
+// Firebase configuration (dari langkah sebelumnya)
 var firebaseConfig = {
     apiKey: "AIzaSyBOIx7Q50yEQNnPmdN7OlzzGRaT30k2i1I",
     authDomain: "backup-80243.firebaseapp.com",
@@ -10,6 +10,9 @@ var firebaseConfig = {
 };
 // Inisialisasi Firebase
 firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+
 
 // Inisialisasi Realtime Database
 const database = firebase.database();
