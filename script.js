@@ -34,6 +34,7 @@ saveTaskBtn.addEventListener('click', () => {
         // Tambahkan event listener untuk tombol hapus "*"
         taskItem.querySelector('.remove-btn').addEventListener('click', () => {
             taskItem.remove();
+            saveTasksToLocalStorage(); // Update LocalStorage setelah menghapus tugas
         });
 
         taskList.appendChild(taskItem);
@@ -43,12 +44,45 @@ saveTaskBtn.addEventListener('click', () => {
         deadlineInput.value = '';
         taskForm.classList.add('hidden'); // Sembunyikan form setelah menyimpan
 
+        // Simpan ke LocalStorage
+        saveTasksToLocalStorage();
+
         // Pengecekan deadline
         checkDeadline(deadlineDate, taskItem, task);
     } else {
         alert('Silakan masukkan tugas dan tanggal deadline!');
     }
 });
+
+// Fungsi untuk menyimpan tugas ke LocalStorage
+function saveTasksToLocalStorage() {
+    const tasks = [];
+    document.querySelectorAll('.task-item').forEach(taskItem => {
+        const taskText = taskItem.querySelector('span').textContent;
+        const deadlineText = taskItem.querySelector('.deadline').textContent.replace('Deadline: ', '');
+        tasks.push({ task: taskText, deadline: deadlineText });
+    });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Fungsi untuk memuat tugas dari LocalStorage
+function loadTasksFromLocalStorage() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.forEach(({ task, deadline }) => {
+        const taskItem = document.createElement('li');
+        taskItem.classList.add('task-item');
+        taskItem.innerHTML = `
+            <span>${task}</span>
+            <span class="deadline">Deadline: ${deadline}</span>
+            <button class="remove-btn">*</button>
+        `;
+        taskItem.querySelector('.remove-btn').addEventListener('click', () => {
+            taskItem.remove();
+            saveTasksToLocalStorage(); // Update LocalStorage setelah menghapus tugas
+        });
+        taskList.appendChild(taskItem);
+    });
+}
 
 // Fungsi untuk mengecek deadline dan memberi notifikasi
 function checkDeadline(deadlineDate, taskItem, task) {
@@ -73,3 +107,8 @@ function checkDeadline(deadlineDate, taskItem, task) {
         }
     }, 1000 * 60 * 60); // Cek setiap jam
 }
+
+// Muat tugas dari LocalStorage saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    loadTasksFromLocalStorage();
+});
