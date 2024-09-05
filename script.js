@@ -11,9 +11,6 @@ var firebaseConfig = {
 // Inisialisasi Firebase
 firebase.initializeApp(firebaseConfig);
 
-const database = firebase.database();
-
-
 // Inisialisasi Realtime Database
 const database = firebase.database();
 
@@ -39,12 +36,18 @@ saveTaskBtn.addEventListener('click', () => {
         database.ref('tasks/').push({
             task: task,
             deadline: deadline
+        }, (error) => {
+            if (error) {
+                alert('Gagal menyimpan tugas, coba lagi.');
+                console.error('Error saving task:', error);
+            } else {
+                alert('Tugas berhasil disimpan!');
+                // Kosongkan input setelah menyimpan
+                taskInput.value = '';
+                deadlineInput.value = '';
+                taskForm.classList.add('hidden'); // Sembunyikan form setelah menyimpan
+            }
         });
-
-        // Kosongkan input setelah menyimpan
-        taskInput.value = '';
-        deadlineInput.value = '';
-        taskForm.classList.add('hidden'); // Sembunyikan form setelah menyimpan
     } else {
         alert('Silakan masukkan tugas dan tanggal deadline!');
     }
@@ -65,7 +68,14 @@ database.ref('tasks/').on('value', (snapshot) => {
 
         // Event listener untuk menghapus tugas dari Firebase
         taskItem.querySelector('.remove-btn').addEventListener('click', () => {
-            childSnapshot.ref.remove(); // Hapus tugas dari Firebase
+            childSnapshot.ref.remove((error) => {
+                if (error) {
+                    alert('Gagal menghapus tugas, coba lagi.');
+                    console.error('Error removing task:', error);
+                } else {
+                    alert('Tugas berhasil dihapus!');
+                }
+            });
         });
 
         taskList.appendChild(taskItem);
