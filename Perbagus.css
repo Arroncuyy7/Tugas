@@ -1,17 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import url('base.css');
 
 body {
-    font-family: Arial, sans-serif;
     background: linear-gradient(to right, #53575a, #204d50);
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
 .container {
