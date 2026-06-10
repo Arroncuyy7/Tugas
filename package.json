@@ -1,0 +1,13 @@
+{
+  "name": "tugas-app",
+  "version": "1.0.0",
+  "description": "Kumpulan Tugas - Task management app",
+  "scripts": {
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
